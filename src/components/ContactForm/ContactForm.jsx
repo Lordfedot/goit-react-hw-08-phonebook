@@ -1,8 +1,8 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { Form, Input, Button } from './Styled/ContactForm.styled';
-import { addContact } from 'components/redux/operation';
-
-import { getContacts } from 'components/redux/selectors';
+import { addContact } from 'redux/operations/operation';
+import { getContacts } from 'redux/selectors';
+import { Form, Input } from './ContactForm.styled';
+import { Button } from 'components/Utils/Button';
 
 const ContactForm = () => {
   const dispatch = useDispatch();
@@ -12,12 +12,12 @@ const ContactForm = () => {
     event.preventDefault();
     const form = event.target;
     const name = form.elements.text.value;
-    const phone = form.elements.phone.value;
+    const number = form.elements.phone.value;
     const contactsNames = contacts.map(contact => contact.name);
 
     const data = {
       name: name,
-      phone: phone,
+      number: number,
     };
 
     if (contactsNames.includes(name)) {
@@ -31,8 +31,8 @@ const ContactForm = () => {
   return (
     <Form onSubmit={handleSubmit}>
       <label>
-        Name
         <Input
+          placeholder="Name"
           type="text"
           name="text"
           pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
@@ -41,8 +41,8 @@ const ContactForm = () => {
         />
       </label>
       <label>
-        Phone
         <Input
+          placeholder="Phone"
           type="tel"
           name="phone"
           pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
